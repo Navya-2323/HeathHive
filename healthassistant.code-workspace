@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../../healthassistant"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "disabled",
+		"java.compile.nullAnalysis.mode": "disabled"
+	}
+}
