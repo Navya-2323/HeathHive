@@ -82,47 +82,6 @@ The application will start on `http://localhost:8080`
 - **GET** `/api/health/health` - Health check endpoint
 - **GET** `/api/health/stats` - System statistics
 
-## Sample Request
-
-```json
-POST /api/health/assess
-Content-Type: application/json
-
-{
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "age": 35,
-  "gender": "MALE",
-  "height": 175.0,
-  "weight": 80.0,
-  "systolicBP": 120,
-  "diastolicBP": 80,
-  "heartRate": 75,
-  "cholesterol": 180.0,
-  "bloodSugar": 95.0,
-  "hasDiabetes": false,
-  "hasHypertension": false,
-  "hasHeartDisease": false,
-  "smokes": false,
-  "exercisesRegularly": true
-}
-```
-
-## Sample Response
-
-```json
-{
-  "assessmentId": 1,
-  "userName": "John Doe",
-  "userEmail": "john.doe@example.com",
-  "riskLevel": "LOW",
-  "riskPercentage": 15.5,
-  "riskFactors": "No significant risk factors identified",
-  "recommendations": "Maintain current healthy lifestyle; Continue regular health screenings",
-  "pdfReportPath": "reports/health_report_john.doe_example.com_1234567890.pdf",
-  "message": "Health assessment completed successfully"
-}
-```
 
 ## Risk Assessment Algorithm
 
@@ -219,3 +178,4 @@ This project is licensed under the MIT License.
 ## Disclaimer
 
 This application is for educational and demonstration purposes only. It should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare providers for proper medical evaluation.
+
