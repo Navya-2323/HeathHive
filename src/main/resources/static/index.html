@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Assistant API Tester</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .error {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .success {
+            background-color: #27ae60;
+            color: white;
+        }
+        .sample-buttons {
+            margin-bottom: 20px;
+        }
+        .sample-buttons button {
+            background-color: #95a5a6;
+            margin-bottom: 5px;
+        }
+        .sample-buttons button:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Intelligent Health Assistant API Tester</h1>
+        
+        <div class="sample-buttons">
+            <button onclick="loadSample('low')">Load Low Risk Sample</button>
+            <button onclick="loadSample('medium')">Load Medium Risk Sample</button>
+            <button onclick="loadSample('high')">Load High Risk Sample</button>
+        </div>
+
+        <form id="healthForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="1" max="150" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                    <option value="OTHER">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" name="height" min="50" max="300" step="0.1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" min="10" max="500" step="0.1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="systolicBP">Systolic Blood Pressure (mmHg):</label>
+                <input type="number" id="systolicBP" name="systolicBP" min="50" max="300">
+            </div>
+
+            <div class="form-group">
+                <label for="diastolicBP">Diastolic Blood Pressure (mmHg):</label>
+                <input type="number" id="diastolicBP" name="diastolicBP" min="30" max="200">
+            </div>
+
+            <div class="form-group">
+                <label for="heartRate">Heart Rate (bpm):</label>
+                <input type="number" id="heartRate" name="heartRate" min="30" max="200">
+            </div>
+
+            <div class="form-group">
+                <label for="cholesterol">Cholesterol (mg/dL):</label>
+                <input type="number" id="cholesterol" name="cholesterol" min="0" max="1000" step="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="bloodSugar">Blood Sugar (mg/dL):</label>
+                <input type="number" id="bloodSugar" name="bloodSugar" min="0" max="1000" step="0.1">
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="hasDiabetes" name="hasDiabetes"> Has Diabetes
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="hasHypertension" name="hasHypertension"> Has Hypertension
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="hasHeartDisease" name="hasHeartDisease"> Has Heart Disease
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="smokes" name="smokes"> Smokes
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="exercisesRegularly" name="exercisesRegularly"> Exercises Regularly
+                </label>
+            </div>
+
+            <button type="button" onclick="submitAssessment()">Submit Assessment (Async)</button>
+            <button type="button" onclick="submitAssessmentSync()">Submit Assessment (Sync)</button>
+            <button type="button" onclick="clearForm()">Clear Form</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        const sampleData = {
+            low: {
+                name: "Alice Johnson",
+                email: "alice.johnson@example.com",
+                age: 28,
+                gender: "FEMALE",
+                height: 165.0,
+                weight: 60.0,
+                systolicBP: 110,
+                diastolicBP: 70,
+                heartRate: 65,
+                cholesterol: 160.0,
+                bloodSugar: 85.0,
+                hasDiabetes: false,
+                hasHypertension: false,
+                hasHeartDisease: false,
+                smokes: false,
+                exercisesRegularly: true
+            },
+            medium: {
+                name: "Bob Smith",
+                email: "bob.smith@example.com",
+                age: 45,
+                gender: "MALE",
+                height: 180.0,
+                weight: 90.0,
+                systolicBP: 135,
+                diastolicBP: 85,
+                heartRate: 80,
+                cholesterol: 220.0,
+                bloodSugar: 110.0,
+                hasDiabetes: false,
+                hasHypertension: false,
+                hasHeartDisease: false,
+                smokes: false,
+                exercisesRegularly: false
+            },
+            high: {
+                name: "Charlie Brown",
+                email: "charlie.brown@example.com",
+                age: 65,
+                gender: "MALE",
+                height: 170.0,
+                weight: 95.0,
+                systolicBP: 150,
+                diastolicBP: 95,
+                heartRate: 90,
+                cholesterol: 280.0,
+                bloodSugar: 140.0,
+                hasDiabetes: true,
+                hasHypertension: true,
+                hasHeartDisease: false,
+                smokes: true,
+                exercisesRegularly: false
+            }
+        };
+
+        function loadSample(type) {
+            const data = sampleData[type];
+            if (!data) return;
+
+            document.getElementById('name').value = data.name;
+            document.getElementById('email').value = data.email;
+            document.getElementById('age').value = data.age;
+            document.getElementById('gender').value = data.gender;
+            document.getElementById('height').value = data.height;
+            document.getElementById('weight').value = data.weight;
+            document.getElementById('systolicBP').value = data.systolicBP;
+            document.getElementById('diastolicBP').value = data.diastolicBP;
+            document.getElementById('heartRate').value = data.heartRate;
+            document.getElementById('cholesterol').value = data.cholesterol;
+            document.getElementById('bloodSugar').value = data.bloodSugar;
+            document.getElementById('hasDiabetes').checked = data.hasDiabetes;
+            document.getElementById('hasHypertension').checked = data.hasHypertension;
+            document.getElementById('hasHeartDisease').checked = data.hasHeartDisease;
+            document.getElementById('smokes').checked = data.smokes;
+            document.getElementById('exercisesRegularly').checked = data.exercisesRegularly;
+        }
+
+        function clearForm() {
+            document.getElementById('healthForm').reset();
+            document.getElementById('result').style.display = 'none';
+        }
+
+        function submitAssessment() {
+            submitToAPI('/api/health/assess');
+        }
+
+        function submitAssessmentSync() {
+            submitToAPI('/api/health/assess/sync');
+        }
+
+        function submitToAPI(endpoint) {
+            const formData = new FormData(document.getElementById('healthForm'));
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (key === 'hasDiabetes' || key === 'hasHypertension' || key === 'hasHeartDisease' || 
+                    key === 'smokes' || key === 'exercisesRegularly') {
+                    data[key] = document.getElementById(key).checked;
+                } else if (value !== '') {
+                    data[key] = isNaN(value) ? value : parseFloat(value);
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result';
+            resultDiv.textContent = 'Submitting assessment...';
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                resultDiv.className = 'result success';
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = 'Error: ' + error.message;
+            });
+        }
+    </script>
+</body>
+</html>
