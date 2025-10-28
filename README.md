@@ -106,7 +106,6 @@ Risk Levels:
 The application uses H2 in-memory database for development. Access the console at:
 `http://localhost:8080/h2-console`
 
-- **JDBC URL**: `jdbc:h2:mem:healthdb`
 - **Username**: `sa`
 - **Password**: `password`
 
@@ -178,4 +177,5 @@ This project is licensed under the MIT License.
 ## Disclaimer
 
 This application is for educational and demonstration purposes only. It should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare providers for proper medical evaluation.
+
 
